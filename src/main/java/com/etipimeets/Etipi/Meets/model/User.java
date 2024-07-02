@@ -2,16 +2,39 @@ package com.etipimeets.Etipi.Meets.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User extends Base {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false, unique = true)
     private String userName;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String password;
+
     private String department;
+
     private String company;
 
-    public User(String userName, String password, String department, String company, LocalDateTime createdAt,
+    public User(String userName, String name, String password, String department, String company,
+            LocalDateTime createdAt,
             LocalDateTime updatedAt) {
         this.userName = userName;
+        this.name = name;
         this.password = password;
         this.department = department;
         this.company = company;
@@ -32,6 +55,14 @@ public class User extends Base {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -72,8 +103,8 @@ public class User extends Base {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", department=" + department
-                + ", company=" + company + "]";
+        return "User [id=" + id + ", userName=" + userName + ", name=" + name + ", password=" + password
+                + ", department=" + department + ", company=" + company + "]";
     }
 
     @Override
@@ -82,6 +113,7 @@ public class User extends Base {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((department == null) ? 0 : department.hashCode());
         result = prime * result + ((company == null) ? 0 : company.hashCode());
@@ -106,6 +138,11 @@ public class User extends Base {
             if (other.userName != null)
                 return false;
         } else if (!userName.equals(other.userName))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
             return false;
         if (password == null) {
             if (other.password != null)
